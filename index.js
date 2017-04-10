@@ -1,8 +1,24 @@
 const Redis = require('ioredis');
 const Queue = require('bull');
 const UUID = require('uuid');
+const Job = require('bull/lib/job');
 
 const JobResponses = {};
+
+Queue.prototype.add = function (data, opts) {
+    let jobId = UUID.v4();
+    let job = Job.create(this, data, Object.assign({
+        jobId
+    }, opts));
+    job.response = new Promise((resolve, reject) => {
+        JobResponses[jobId] = {
+            resolve,
+            reject
+        };
+    });
+
+    return job;
+};
 
 module.exports = {
     QueueManager: class {
@@ -51,8 +67,6 @@ module.exports = {
                 }
                 this.queues[name] = q;
 
-                // extending add method of the Queue class
-                q.__add = q.add;
                 q.on('completed', function (job, result) {
                     if (JobResponses[job.jobId]) {
                         JobResponses[job.jobId].resolve(result);
@@ -65,21 +79,6 @@ module.exports = {
                     }
                     delete JobResponses[job.jobId];
                 });
-
-                q.add = (data, opts = {}) => {
-                    let jobId = UUID.v4();
-                    let job = q.__add(data, Object.assign({
-                        jobId
-                    }, opts));
-                    job.response = new Promise((resolve, reject) => {
-                        JobResponses[jobId] = {
-                            resolve,
-                            reject
-                        };
-                    });
-
-                    return job;
-                }
             }
 
             return q;
