@@ -1,2 +1,2 @@
 # bull-queue-manager
-Minimalistic queue manager for bull using redis.
+Minimalistic queue manager based on [bull](https://www.npmjs.com/package/bull).
