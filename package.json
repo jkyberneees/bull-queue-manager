@@ -1,0 +1,33 @@
+{
+  "name": "bull-queue-manager",
+  "version": "1.0.0",
+  "description": "Minimalistic queue manager based on bull.",
+  "main": "index.js",
+  "dependencies": {
+    "bull": "^2.2.6",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "3.x.x",
+    "mocha": "^3"
+  },
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkyberneees/bull-queue-manager.git"
+  },
+  "keywords": [
+    "queue",
+    "manager",
+    "bull",
+    "redis"
+  ],
+  "author": "Rolando Santamaría Masó <kyberneees@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkyberneees/bull-queue-manager/issues"
+  },
+  "homepage": "https://github.com/jkyberneees/bull-queue-manager#readme"
+}
