@@ -4,8 +4,8 @@
   "description": "Minimalistic queue manager based on bull.",
   "main": "index.js",
   "dependencies": {
-    "bull": "^2.2.6",
-    "uuid": "^3.0.1"
+    "bull": "^2.x.x",
+    "uuid": "^3.x.x"
   },
   "devDependencies": {
     "chai": "3.x.x",
