@@ -67,13 +67,13 @@ module.exports = {
                 }
                 this.queues[name] = q;
 
-                q.on('completed', function (job, result) {
+                q.on('global:completed', function (job, result) {
                     if (JobResponses[job.jobId]) {
                         JobResponses[job.jobId].resolve(result);
                     }
                     delete JobResponses[job.jobId];
                 });
-                q.on('failed', function (job, err) {
+                q.on('global:failed', function (job, err) {
                     if (JobResponses[job.jobId]) {
                         JobResponses[job.jobId].reject(err);
                     }
