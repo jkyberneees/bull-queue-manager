@@ -59,7 +59,7 @@ module.exports = {
                     q = new Queue(name, this.config.port, this.config.host, Object.assign({
                         db,
                         createClient: (type) => this.createClient(type)
-                    }, opts));
+                    }, this.config.opts));
                 } else {
                     q = new Queue(name, port, host, Object.assign({
                         db
