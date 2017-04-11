@@ -35,8 +35,8 @@ module.exports = {
         }
 
         init() {
-            this.client = new Redis(this.port, this.host, this.config.opts);
-            this.subscriber = new Redis(this.port, this.host, this.config.opts);
+            this.client = new Redis(this.config.port, this.config.host, this.config.opts);
+            this.subscriber = new Redis(this.config.port, this.config.host, this.config.opts);
 
             this.createClient = function (type) {
                 switch (type) {
@@ -45,7 +45,7 @@ module.exports = {
                     case 'subscriber':
                         return this.subscriber;
                     default:
-                        return new Redis(this.port, this.host, this.config.opts);
+                        return new Redis(this.config.port, this.config.host, this.config.opts);
                 }
             }
 
@@ -61,7 +61,7 @@ module.exports = {
                         createClient: (type) => this.createClient(type)
                     }, opts));
                 } else {
-                    q = new Queue(name, this.config.port, this.config.host, Object.assign({
+                    q = new Queue(name, port, host, Object.assign({
                         db
                     }, opts));
                 }
