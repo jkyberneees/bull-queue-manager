@@ -7,7 +7,9 @@ describe('Bull Queue Manager', () => {
 
     it('creating manager instance', async() => {
         qm = new QueueManager();
+        qm2 = new QueueManager();
         qm.init();
+        qm2.init();
     });
 
     it('creating some queues', async() => {
@@ -19,7 +21,7 @@ describe('Bull Queue Manager', () => {
     });
 
     it('processing jobs', (done) => {
-        q1.process(async(job) => {
+        qm2.queue('q1').process(async(job) => {
             expect(job.data.name).to.equal('job1');
 
             return {
