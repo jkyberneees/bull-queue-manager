@@ -20,6 +20,18 @@ Queue.prototype.add = function (data, opts) {
     return job;
 };
 
+const connect = (config) => {
+    if ('string' == typeof config.port) return new Redis(config.port, config.opts);
+    return new Redis(config.port, config.host, config.opts);
+}
+
+const queue = (name, port, host, opts) => {
+    if ('string' == typeof port) {
+        return new Queue(name, port, opts)
+    }
+    return new Queue(name, port, host, opts);
+}
+
 module.exports = {
     QueueManager: class {
         constructor(port = 6379, host = 'localhost', db = 0, opts = {}) {
@@ -28,15 +40,15 @@ module.exports = {
                 host,
                 opts: Object.assign({
                     db: db
-                }, opts)
+                }, opts, host instanceof Object ? host : {})
             };
 
             this.queues = {};
         }
 
         init() {
-            this.client = new Redis(this.config.port, this.config.host, this.config.opts);
-            this.subscriber = new Redis(this.config.port, this.config.host, this.config.opts);
+            this.client = connect(this.config);
+            this.subscriber = connect(this.config);
 
             this.createClient = function (type) {
                 switch (type) {
@@ -45,7 +57,7 @@ module.exports = {
                     case 'subscriber':
                         return this.subscriber;
                     default:
-                        return new Redis(this.config.port, this.config.host, this.config.opts);
+                        return connect(this.config);
                 }
             }
 
@@ -56,14 +68,14 @@ module.exports = {
             let q = this.queues[name];
             if (!q) {
                 if (Object.keys(arguments).length == 1) {
-                    q = new Queue(name, this.config.port, this.config.host, Object.assign({
+                    q = queue(name, this.config.port, this.config.host, Object.assign({
                         db,
                         createClient: (type) => this.createClient(type)
                     }, this.config.opts));
                 } else {
-                    q = new Queue(name, port, host, Object.assign({
+                    q = queue(name, port, host, Object.assign({
                         db
-                    }, opts));
+                    }, opts, host instanceof Object ? host : {}));
                 }
                 this.queues[name] = q;
 

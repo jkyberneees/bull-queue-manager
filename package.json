@@ -1,6 +1,6 @@
 {
   "name": "bull-queue-manager",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Minimalistic queue manager based on bull.",
   "main": "index.js",
   "dependencies": {
