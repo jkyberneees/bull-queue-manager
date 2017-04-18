@@ -6,7 +6,7 @@ let qm, q1, q2, q3, q4, q5;
 describe('Bull Queue Manager', () => {
 
     it('creating manager instance', async() => {
-        qm = new QueueManager();
+        qm = new QueueManager('redis://localhost:6379/0', {});
         qm2 = new QueueManager();
         qm.init();
         qm2.init();
