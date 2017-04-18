@@ -13,7 +13,7 @@ let result = await q1.add({
 Create and initialize Queue Manager:
 ```js
 const QueueManager = require('bull-queue-manager').QueueManager;
-qm = new QueueManager(
+const qm = new QueueManager(
     6379,           //redis port
     'localhost',    //redis host
     0,              //redis db
@@ -21,15 +21,22 @@ qm = new QueueManager(
 );
 qm.init();
 ```
+```js
+// also redis URL can be used
+const qm = new QueueManager('redis://localhost:6379/0', {
+    // options
+});
+```
 ### Create some queues on demand: ###
 ```js
-q1 = qm.queue('q1');
-q2 = qm.queue('q2');
-q3 = qm.queue('q3');
-q4 = qm.queue('q4');
+const q1 = qm.queue('q1');
+const q2 = qm.queue('q2');
+const q3 = qm.queue('q3');
+const q4 = qm.queue('q4');
 
 // optionally override default config
-q5 = qm.queue('q5', 6379, 'redis.instance.com', 1, {});
+const q5 = qm.queue('q5', 6379, 'redis.instance.com', 1, {});
+const q6 = qm.queue('redis://localhost:6379/3', {});
 // ...
 ```
 
