@@ -1,5 +1,5 @@
 # bull-queue-manager
-Minimalistic queue manager based on [bull](https://www.npmjs.com/package/bull): the awesome Node.js job and message queue.
+Minimalist queue manager based on [bull](https://www.npmjs.com/package/bull): the awesome Node.js job and message queue.
 
 This module provides a high level API that allow you to re-use shared configurations and instances, as well as [reduce the number of redis connections](https://github.com/OptimalBits/bull#reusing-redis-connections) to the minimum by default.
 Also introduce a convenient "response" promise to easily process jobs result:
@@ -22,7 +22,7 @@ const qm = new QueueManager(
 qm.init();
 ```
 ```js
-// also redis URL can be used
+// also redis connection URL can be used
 const qm = new QueueManager('redis://localhost:6379/0', {
     // options
 });
